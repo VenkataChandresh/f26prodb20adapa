@@ -1,0 +1,38 @@
+
+extends layout
+
+block content
+  h1= title
+  p Here are the university search results.
+
+  -
+    const results = [
+      {
+        name: "Northwest Missouri State University",
+        location: "Maryville, Missouri",
+        studentCount: 8000
+      },
+      {
+        name: "University of Kansas",
+        location: "Lawrence, Kansas",
+        studentCount: 30000
+      },
+      {
+        name: "Missouri State University",
+        location: "Springfield, Missouri",
+        studentCount: 23000
+      }
+    ];
+
+  div.container-fluid
+    div.row
+      each university, index in results
+        div.col-sm-2(onclick=`buy(${index})`, style="cursor: pointer;")
+          p Name: #{university.name}
+          p Location: #{university.location}
+          p Students: #{university.studentCount}
+
+  script.
+    function buy(index) {
+      alert(`You purchased item ${index}`);
+    }

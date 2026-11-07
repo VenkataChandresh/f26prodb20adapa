@@ -1,0 +1,24 @@
+
+extends layout
+
+block content
+  h1= title
+  p Randomly selected university images
+
+  -
+    const image_names = [
+      "campus1.jpeg",
+      "campus2.png",
+      "campus3.jpg",
+      "campus4.jpeg",
+      "campus5.jpeg"
+    ];
+
+  div.container-fluid
+    div.row
+      - for (let i = 0; i < 3; i++) {
+        - let randomIndex = Math.floor(Math.random() * 5)
+        - let imageName = image_names[randomIndex]
+        div.col-md-4
+          img(src=`/images/${imageName}`, alt=`University campus ${randomIndex + 1}`, width="300", height="300")
+      - }
