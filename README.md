@@ -16,7 +16,7 @@ npm start
 
 ## Live Deployment
 
-[View the application on Render](https://https://f26pro20adapa.onrender.com/)
+[View the application on Render](https://f26prodb20adapa.onrender.com/)
 
 ## Resource Class: Universities
 
