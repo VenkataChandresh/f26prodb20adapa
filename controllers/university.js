@@ -8,8 +8,14 @@ exports.university_list = async function(req, res) {
 };
 
 // Details of a specific University
-exports.university_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: University detail: ' + req.params.id);
+exports.university_detail = async function(req, res) {
+    try {
+        let result = await University.findById(req.params.id);
+        res.send(result);
+    } catch (error) {
+        res.status(500);
+        res.send({ error: `University with ID ${req.params.id} not found` });
+    }
 };
 
 // Create a University
@@ -32,8 +38,26 @@ exports.university_delete = function(req, res) {
 };
 
 // Update a University
-exports.university_update_put = function(req, res) {
-    res.send('NOT IMPLEMENTED: University update PUT ' + req.params.id);
+exports.university_update_put = async function(req, res) {
+    try {
+        let toUpdate = await University.findById(req.params.id);
+
+        if (req.body.name)
+            toUpdate.name = req.body.name;
+
+        if (req.body.location)
+            toUpdate.location = req.body.location;
+
+        if (req.body.studentCount)
+            toUpdate.studentCount = req.body.studentCount;
+
+        let result = await toUpdate.save();
+        res.send(result);
+
+    } catch (error) {
+        res.status(500);
+        res.send({ error: `Update for ID ${req.params.id} failed` });
+    }
 };
 
 
