@@ -103,3 +103,21 @@ exports.university_create_Page = function(req, res) {
     title: 'Create University'
   });
 };
+
+
+exports.university_update_Page = async function(req, res) {
+  try {
+    const result = await University.findById(req.query.id);
+
+    if (!result) {
+      return res.status(404).send("University not found");
+    }
+
+    res.render('universityupdate', {
+      title: 'Update University',
+      toShow: result
+    });
+  } catch (err) {
+    res.status(500).send(`Error: ${err.message}`);
+  }
+};
