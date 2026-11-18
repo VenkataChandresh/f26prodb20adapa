@@ -1,0 +1,36 @@
+
+extends layout
+
+block content
+  div.container.mt-4
+    h1= title
+
+    if !toShow
+      h2 University not found
+      a.btn.btn-secondary(href='/universities') Back
+    else
+      p University ID: #{toShow._id}
+      p University Name: #{toShow.name}
+      p Location: #{toShow.location}
+      p Student Count: #{toShow.studentCount}
+
+      button#deleteBtn.btn.btn-danger(type='button', data-id=toShow._id) Delete University
+      a.btn.btn-secondary.ms-2(href='/universities') Cancel
+
+      script.
+        document.getElementById('deleteBtn').addEventListener('click', async function() {
+          if (!confirm('Are you sure you want to delete this university?')) return;
+
+          try {
+            const response = await fetch('/resource/universities/' + this.dataset.id, {
+              method: 'DELETE'
+            });
+
+            if (!response.ok) throw new Error('Delete failed');
+
+            alert('University deleted successfully!');
+            window.location.href = '/universities';
+          } catch (error) {
+            alert('Delete failed: ' + error.message);
+          }
+        });

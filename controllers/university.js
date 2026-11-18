@@ -121,3 +121,17 @@ exports.university_update_Page = async function(req, res) {
     res.status(500).send(`Error: ${err.message}`);
   }
 };
+
+
+exports.university_delete_Page = async function(req, res) {
+  try {
+    const result = await University.findById(req.query.id);
+
+    res.render('universitydelete', {
+      title: 'Delete University',
+      toShow: result
+    });
+  } catch (err) {
+    res.status(500).send(`Error: ${err.message}`);
+  }
+};
