@@ -5,34 +5,43 @@ block content
   div.container.mt-4
     h1= title
 
-    p University ID: #{toShow._id}
+    if !toShow
+      div.alert.alert-warning
+        h4 University Not Found
+        p Cannot update because this university does not exist.
+        a.btn.btn-secondary(href='/universities') Back to Universities
+    else
+      p University ID: #{toShow._id}
 
-    form#UniversityForm(action='/resource/universities/' + toShow._id, method='POST')
-      div.mb-3
-        label.form-label(for='name') University Name
-        input#name.form-control(type='text', name='name', value=toShow.name, required)
+      form#UniversityForm(action='/resource/universities/' + toShow._id, method='POST')
+        div.mb-3
+          label.form-label(for='name') University Name
+          input#name.form-control(type='text', name='name', value=toShow.name, required)
 
-      div.mb-3
-        label.form-label(for='location') Location
-        input#location.form-control(type='text', name='location', value=toShow.location, required)
+        div.mb-3
+          label.form-label(for='location') Location
+          input#location.form-control(type='text', name='location', value=toShow.location, required)
 
-      div.mb-3
-        label.form-label(for='studentCount') Student Count
-        input#studentCount.form-control(type='number', name='studentCount', value=toShow.studentCount, required)
+        div.mb-3
+          label.form-label(for='studentCount') Student Count
+          input#studentCount.form-control(type='number', name='studentCount', value=toShow.studentCount, required)
 
-      button.btn.btn-primary(type='submit') Update University
+        button.btn.btn-primary(type='submit') Update University
 
-    script.
-      document.getElementById('UniversityForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        try {
-          const response = await fetch(event.target.action, {
-            method: 'PUT',
-            body: new URLSearchParams(new FormData(event.target))
-          });
-          if (!response.ok) throw new Error('Update failed');
-          alert('University updated successfully!');
-        } catch (error) {
-          alert('Update failed: ' + error.message);
-        }
-      });
+      script.
+        document.getElementById('UniversityForm').addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          try {
+            const response = await fetch(event.target.action, {
+              method: 'PUT',
+              body: new URLSearchParams(new FormData(event.target))
+            });
+
+            if (!response.ok) throw new Error('Update failed');
+
+            alert('University updated successfully!');
+          } catch (error) {
+            alert('Update failed: ' + error.message);
+          }
+        });

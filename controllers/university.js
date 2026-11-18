@@ -85,16 +85,15 @@ exports.university_view_one_Page = async function(req, res) {
   try {
     const result = await University.findById(req.query.id);
 
-    if (!result) {
-      return res.status(404).send("University not found");
-    }
-
-    res.render('universitydetail', {
+    res.status(result ? 200 : 404).render('universitydetail', {
       title: 'University Detail',
       toShow: result
     });
   } catch (err) {
-    res.status(500).send(`Error: ${err.message}`);
+    res.status(400).render('universitydetail', {
+      title: 'University Detail',
+      toShow: null
+    });
   }
 };
 
@@ -109,16 +108,15 @@ exports.university_update_Page = async function(req, res) {
   try {
     const result = await University.findById(req.query.id);
 
-    if (!result) {
-      return res.status(404).send("University not found");
-    }
-
-    res.render('universityupdate', {
+    res.status(result ? 200 : 404).render('universityupdate', {
       title: 'Update University',
       toShow: result
     });
   } catch (err) {
-    res.status(500).send(`Error: ${err.message}`);
+    res.status(400).render('universityupdate', {
+      title: 'Update University',
+      toShow: null
+    });
   }
 };
 
