@@ -33,8 +33,18 @@ exports.university_create_post = async function(req, res) {
 };
 
 // Delete a University
-exports.university_delete = function(req, res) {
-    res.send('NOT IMPLEMENTED: University delete DELETE ' + req.params.id);
+exports.university_delete = async function(req, res) {
+    try {
+    const result = await University.findByIdAndDelete(req.params.id);
+
+    if (!result) {
+      return res.status(404).json({ error: "University not found" });
+    }
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // Update a University
@@ -69,4 +79,27 @@ exports.university_view_all_Page = async function(req, res) {
         title: 'University Search Results',
         results: universities
     });
+};
+
+exports.university_view_one_Page = async function(req, res) {
+  try {
+    const result = await University.findById(req.query.id);
+
+    if (!result) {
+      return res.status(404).send("University not found");
+    }
+
+    res.render('universitydetail', {
+      title: 'University Detail',
+      toShow: result
+    });
+  } catch (err) {
+    res.status(500).send(`Error: ${err.message}`);
+  }
+};
+
+exports.university_create_Page = function(req, res) {
+  res.render('universitycreate', {
+    title: 'Create University'
+  });
 };

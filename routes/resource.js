@@ -14,5 +14,6 @@ router.delete('/universities/:id', university_controller.university_delete);
 router.put('/universities/:id', university_controller.university_update_put);
 router.get('/universities/:id', university_controller.university_detail);
 router.get('/universities', university_controller.university_list);
+router.delete('/universities/:id', university_controller.university_delete);
 
 module.exports = router;

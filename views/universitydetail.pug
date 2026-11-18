@@ -1,0 +1,25 @@
+
+extends layout
+
+block content
+  h1= title
+
+  if toShow
+    div.row
+      div.col-sm-3 University ID:
+      div.col-sm-9 #{toShow._id}
+
+    div.row
+      div.col-sm-3 University Name:
+      div.col-sm-9 #{toShow.name}
+
+    div.row
+      div.col-sm-3 Location:
+      div.col-sm-9 #{toShow.location}
+
+    div.row
+      div.col-sm-3 Student Count:
+      div.col-sm-9 #{toShow.studentCount}
+  else
+    h2 University not found
+

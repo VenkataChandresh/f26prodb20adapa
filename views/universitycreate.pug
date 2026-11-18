@@ -1,0 +1,41 @@
+
+extends layout
+
+block content
+  div.container.mt-4
+    h1= title
+
+    form#UniversityForm(action="/resource/universities", method="POST")
+      div.mb-3
+        label.form-label(for="name") University Name
+        input#name.form-control(type="text", name="name", required)
+
+      div.mb-3
+        label.form-label(for="location") Location
+        input#location.form-control(type="text", name="location", required)
+
+      div.mb-3
+        label.form-label(for="studentCount") Student Count
+        input#studentCount.form-control(type="number", name="studentCount", required)
+
+      button.btn.btn-primary(type="submit") Create University
+
+    script.
+      document.getElementById('UniversityForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        try {
+          const response = await fetch(event.target.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(event.target))
+          });
+
+          if (!response.ok) throw new Error('Create failed');
+
+          const result = await response.json();
+          alert('University created successfully!');
+          event.target.reset();
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      });
