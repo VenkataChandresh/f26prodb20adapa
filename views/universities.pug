@@ -10,12 +10,9 @@ block content
   div.container-fluid
     div.row
       each university, index in results
-        div.col-sm-2(onclick=`buy(${index})`, style="cursor: pointer;")
+        div.col-sm-2
           p Name: #{university.name}
           p Location: #{university.location}
           p Students: #{university.studentCount}
-
-  script.
-    function buy(index) {
-      alert(`You purchased item ${index}`);
-    }
+          - let destination = '/universities/update?id=' + university._id
+          a.btn.btn-primary.mt-2(href=destination) Update
